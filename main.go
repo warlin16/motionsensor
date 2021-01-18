@@ -2,13 +2,12 @@ package main
 
 import (
 	"log"
-	"motionsensor/config"
 	"os"
 	"path/filepath"
 
 	"gobot.io/x/gobot"
 	"gobot.io/x/gobot/drivers/gpio"
-	"gobot.io/x/gobot/platforms/firmata"
+	"gobot.io/x/gobot/platforms/raspi"
 )
 
 func init() {
@@ -21,9 +20,7 @@ func init() {
 
 func main() {
 	println("Hello, world from the RPI!")
-	c := config.Config{}
-	c.FetchRpiDetails()
-	a := firmata.NewAdaptor(c.Rpi.FirmataPort)
+	a := raspi.NewAdaptor()
 	s := gpio.NewPIRMotionDriver(a, "5")
 
 	test := func() {
