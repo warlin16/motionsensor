@@ -21,7 +21,7 @@ func init() {
 func main() {
 	println("Hello, world from the RPI!")
 	a := raspi.NewAdaptor()
-	s := gpio.NewPIRMotionDriver(a, "5")
+	s := gpio.NewPIRMotionDriver(a, "7")
 
 	test := func() {
 		s.On(gpio.MotionDetected, func(data interface{}) {
