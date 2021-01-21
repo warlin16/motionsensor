@@ -11,6 +11,7 @@ import (
 // Config struct that will load external requirements for the app
 type Config struct {
 	HueBridgeURL string `yaml:"hueBridgeUrl"`
+	HueUsername  string `yaml:"hueUsername"`
 }
 
 // FetchHueBridgeURL loads the configs for the rpi
