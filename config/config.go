@@ -10,13 +10,11 @@ import (
 
 // Config struct that will load external requirements for the app
 type Config struct {
-	Rpi struct {
-		FirmataPort string `yaml:"firmataPort"`
-	}
+	HueBridgeURL string `yaml:"hueBridgeUrl"`
 }
 
-// FetchRpiDetails loads the configs for the rpi
-func (c *Config) FetchRpiDetails() {
+// FetchHueBridgeURL loads the configs for the rpi
+func (c *Config) FetchHueBridgeURL() {
 	yml, err := ioutil.ReadFile(os.Getenv("CONFIG_FILE"))
 	if err != nil {
 		log.Printf("An error ocurred reading the yml file: " + err.Error())
