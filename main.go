@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"motionsensor/hue"
 	"os"
 	"path/filepath"
 
@@ -19,16 +20,23 @@ func init() {
 }
 
 func main() {
+	var j []byte
 	println("Hello, world from the RPI!")
+
+	hue.GetBridgeInfo()
+
 	a := raspi.NewAdaptor()
 	s := gpio.NewPIRMotionDriver(a, "7")
 
 	test := func() {
 		s.On(gpio.MotionDetected, func(data interface{}) {
 			println("Motion was detected!")
+			j = []byte(`{"bri": 20}`)
+			hue.SetLivingRoomBrightness(j)
 		})
 		s.On(gpio.MotionStopped, func(data interface{}) {
 			println("Motion has stopped")
+			j = []byte(`{"bri": 200}`)
 		})
 	}
 

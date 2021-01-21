@@ -12,6 +12,7 @@ require (
 	github.com/nats-io/jwt v1.2.2 // indirect
 	github.com/nats-io/nats.go v1.10.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/urfave/cli v1.22.5 // indirect
 	github.com/veandco/go-sdl2 v0.4.5 // indirect
 	gobot.io/x/gobot v1.15.1-0.20210116205031-7455e4bd918a
