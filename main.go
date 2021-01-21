@@ -37,6 +37,7 @@ func main() {
 		s.On(gpio.MotionStopped, func(data interface{}) {
 			println("Motion has stopped")
 			j = []byte(`{"bri": 200}`)
+			hue.SetLivingRoomBrightness(j)
 		})
 	}
 
