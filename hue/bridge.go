@@ -4,8 +4,12 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"motionsensor/config"
 	"net/http"
+	"os"
 )
+
+var c config.Config
 
 // Bridge slice of structs will contain info about hue bridges in your local network
 type Bridge []struct {
@@ -14,8 +18,9 @@ type Bridge []struct {
 }
 
 // GetBridgeInfo fetches details about local hue bridges
-func GetBridgeInfo() Bridge {
-	resp, err := http.Get("someurl")
+func GetBridgeInfo() {
+	c.FetchHueBridgeURL()
+	resp, err := http.Get(c.HueBridgeURL)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,5 +32,5 @@ func GetBridgeInfo() Bridge {
 	bridges := Bridge{}
 
 	err = json.Unmarshal(body, &bridges)
-	return bridges
+	os.Setenv("HUE_API_URL", "http://"+bridges[0].Internalipaddress+"/api/"+c.HueUsername)
 }
