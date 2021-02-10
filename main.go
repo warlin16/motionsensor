@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"motionsensor/config"
 	"motionsensor/hue"
 	"os"
 	"path/filepath"
@@ -12,16 +13,19 @@ import (
 	"gobot.io/x/gobot/platforms/raspi"
 )
 
+var c config.Config = config.Config{}
+
 func init() {
 	fileName, err := filepath.Abs("./config.yml")
 	if err != nil {
 		log.Printf("Failed to load config file: " + err.Error())
 	}
 	os.Setenv("CONFIG_FILE", fileName)
+	os.Setenv("SPOTIFY_API_URL", "	https://api.spotify.com/v1/")
 }
 
 func main() {
-	hue.GetBridgeInfo()
+	hue.GetBridgeInfo(c)
 
 	a := raspi.NewAdaptor()
 	s := gpio.NewPIRMotionDriver(a, "7")

@@ -9,8 +9,6 @@ import (
 	"os"
 )
 
-var c config.Config
-
 // Bridge slice of structs will contain info about hue bridges in your local network
 type Bridge []struct {
 	ID                string `json:"id,omitempty"`
@@ -18,8 +16,7 @@ type Bridge []struct {
 }
 
 // GetBridgeInfo fetches details about local hue bridges
-func GetBridgeInfo() {
-	c.FetchHueBridgeURL()
+func GetBridgeInfo(c config.Config) {
 	resp, err := http.Get(c.HueBridgeURL)
 	if err != nil {
 		log.Fatal(err)
