@@ -2,8 +2,6 @@ package hue
 
 import (
 	"bytes"
-	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -20,9 +18,5 @@ func SetLivingRoomBrightness(j []byte) {
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-	defer resp.Body.Close()
-	fmt.Println("response status:", resp.Status)
-	fmt.Println("response headers:", resp.Header)
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("response body:", string(body))
+	resp.Body.Close()
 }
