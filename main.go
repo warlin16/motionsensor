@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"motionsensor/hue"
 	"os"
 	"path/filepath"
 
@@ -19,22 +21,37 @@ func init() {
 }
 
 func main() {
-	println("Hello, world from the RPI!")
+	hue.GetBridgeInfo()
+
 	a := raspi.NewAdaptor()
 	s := gpio.NewPIRMotionDriver(a, "7")
 
-	test := func() {
+	botAction := func() {
 		s.On(gpio.MotionDetected, func(data interface{}) {
-			println("Motion was detected!")
+			toggleBrightness(true)
 		})
 		s.On(gpio.MotionStopped, func(data interface{}) {
-			println("Motion has stopped")
+			toggleBrightness(false)
 		})
 	}
 
-	rpi := gobot.NewRobot("motionSensor", []gobot.Connection{a}, []gobot.Device{s}, test)
+	rpi := gobot.NewRobot("motionSensor", []gobot.Connection{a}, []gobot.Device{s}, botAction)
 
 	if err := rpi.Start(); err != nil {
 		log.Fatalf("Rpi could not start: " + err.Error())
 	}
+}
+
+func toggleBrightness(t bool) {
+	var brightness []byte
+	var message string
+	if t {
+		brightness = []byte(`{"bri": 20}`)
+		message = "Motion was detected!"
+	} else {
+		brightness = []byte(`{"bri": 200}`)
+		message = "Motion has stopped"
+	}
+	hue.SetLivingRoomBrightness(brightness)
+	fmt.Printf("%q\n", message)
 }
