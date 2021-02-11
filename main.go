@@ -26,6 +26,7 @@ func init() {
 
 func main() {
 	c.FetchConfig()
+	spotify.SetAuthToken(&c)
 	hue.GetBridgeInfo(&c)
 
 	a := raspi.NewAdaptor()
@@ -34,10 +35,10 @@ func main() {
 	botAction := func() {
 		s.On(gpio.MotionDetected, func(data interface{}) {
 			spotify.GetDevices(&c)
-			toggleBrightness(true)
+			// toggleBrightness(true)
 		})
 		s.On(gpio.MotionStopped, func(data interface{}) {
-			toggleBrightness(false)
+			// toggleBrightness(false)
 		})
 	}
 
