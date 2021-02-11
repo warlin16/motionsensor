@@ -16,7 +16,7 @@ type Bridge []struct {
 }
 
 // GetBridgeInfo fetches details about local hue bridges
-func GetBridgeInfo(c config.Config) {
+func GetBridgeInfo(c *config.Config) {
 	resp, err := http.Get(c.HueBridgeURL)
 	if err != nil {
 		log.Fatal(err)

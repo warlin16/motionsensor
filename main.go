@@ -5,6 +5,7 @@ import (
 	"log"
 	"motionsensor/config"
 	"motionsensor/hue"
+	"motionsensor/spotify"
 	"os"
 	"path/filepath"
 
@@ -21,17 +22,18 @@ func init() {
 		log.Printf("Failed to load config file: " + err.Error())
 	}
 	os.Setenv("CONFIG_FILE", fileName)
-	os.Setenv("SPOTIFY_API_URL", "	https://api.spotify.com/v1/")
 }
 
 func main() {
-	hue.GetBridgeInfo(c)
+	c.FetchConfig()
+	hue.GetBridgeInfo(&c)
 
 	a := raspi.NewAdaptor()
 	s := gpio.NewPIRMotionDriver(a, "7")
 
 	botAction := func() {
 		s.On(gpio.MotionDetected, func(data interface{}) {
+			spotify.GetDevices(&c)
 			toggleBrightness(true)
 		})
 		s.On(gpio.MotionStopped, func(data interface{}) {

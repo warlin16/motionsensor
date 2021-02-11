@@ -15,6 +15,7 @@ type Config struct {
 	SpoClientID     string `yaml:"spoClientID"`
 	SpoClientSecret string `yaml:"spoClientSecret"`
 	SpoOauthToken   string `yaml:"spoOauthToken"`
+	SpotifyURL      string `yaml:"spotifyUrl"`
 }
 
 // FetchConfig loads the configs for the rpi
